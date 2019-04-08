@@ -3,42 +3,68 @@ import { Card, CardImg, CardImgOverlay, CardTitle, CardBody, CardText } from 're
 
 
 class DishDetail extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            selectedState:null
+
+    componentDidMount(){
+        console.log('Dishdetail Component componentDidMount is invoked! ');
+    }
+
+    componentDidUpdate(){
+        console.log('Dishdetail Component componentDidUpdate is invoked! ')
+    }
+
+    renderDish(dish){
+        if(dish!=null){
+            return(
+
+
+                <Card>
+                    <CardImg width="100%" src={dish.image} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+                
+            )
+        }
+        else{
+            return(
+                <div></div>
+            )
         }
     }
 
-   
-
-    
-
-    renderComments(){
-        const commentDetails = this.props.comments.map((fish)=>{
-            return(
-               
-                <div key={fish.id}>
+     renderComments(comments){
+        if(this.props.dish.comments!=null){
+            
+             const Comment= this.props.dish.comments.map((dish)=>{
+                    return(
+                    <div key={dish.id} className="col-12 col-md-5 m-1">
+                    
                     <ul>
-                        <li>                
-                            <div>{fish.comment}</div>
-                        </li>
-                        <li>
-                            <p>-- </p>
-                            <p>{fish.author}, </p>
-                            <p>{fish.date}</p>
-                        </li>
-                    
-                    
-                    
+                    <li>                
+                        <div>{dish.comment}</div>
+                    </li>
+                    <li>
+                        <p>-- {dish.author}, {new Intl.DateTimeFormat( 'en-US', {year:'numeric',month:'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                        
+                    </li>           
+                
                     </ul>
-                </div>
+                    </div>
+                );
+            })
+            return Comment;
+        }
+        else{
+            return(
+            <div></div>
             );
-        });
+        }       
     }
 
     render(){
-       // 
+        console.log('Dishdetail Component render is invoked!')
         return(
             <div className="container">
                 <div className="row">
